@@ -13,7 +13,7 @@ def read_graph_from_file(filename):
     Graph: A directed or undirected Graph object containing the specified
     vertices and edges
     """
-     my_file = open(filename)
+    my_file = open(filename)
 
     graph_type = my_file.readline().strip()
     if graph_type == "G" :
