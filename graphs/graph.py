@@ -23,6 +23,7 @@ class Vertex(object):
         vertex_obj (Vertex): An instance of Vertex to be stored as a neighbor.
         """
         self.__neighbors_dict[vertex_obj.__id] = vertex_obj
+        pass
 
     def __str__(self):
         """Output the list of neighbors of this vertex."""
@@ -90,6 +91,7 @@ class Graph:
         self.__vertex_dict[vertex_id1].add_neighbor(self.__vertex_dict[vertex_id2])
         if not self.__is_directed:
             self.__vertex_dict[vertex_id2].add_neighbor(self.__vertex_dict[vertex_id1])
+        pass
         
     def get_vertices(self):
         """

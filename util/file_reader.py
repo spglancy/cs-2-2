@@ -13,15 +13,26 @@ def read_graph_from_file(filename):
     Graph: A directed or undirected Graph object containing the specified
     vertices and edges
     """
+     my_file = open(filename)
 
-    # TODO: Use 'open' to open the file
+    graph_type = my_file.readline().strip()
+    if graph_type == "G" :
+        graph = Graph(False)
+    elif graph_type == "D" :
+        graph = Graph(True)
+    else:
+        raise ValueError("Unexpected character")
 
-    # TODO: Use the first line (G or D) to determine whether graph is directed 
-    # and create a graph object
+    vertices = my_file.readline().strip().split(",")
+    for vertex in vertices:
+        graph.add_vertex(vertex)
 
-    # TODO: Use the second line to add the vertices to the graph
 
-    # TODO: Use the 3rd+ line to add the edges to the graph
+    for edge in my_file:
+        vertex1, vertex2 = edge.strip()[1:-1].split(",")
+        graph.add_edge(vertex1, vertex2)
+
+    return graph
 
     pass
 
