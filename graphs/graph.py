@@ -22,7 +22,7 @@ class Vertex(object):
         Parameters:
         vertex_obj (Vertex): An instance of Vertex to be stored as a neighbor.
         """
-        pass
+        self.__neighbors_dict[vertex_obj.__id] = vertex_obj
 
     def __str__(self):
         """Output the list of neighbors of this vertex."""
@@ -66,7 +66,7 @@ class Graph:
         Returns:
         Vertex: The new vertex object.
         """
-        pass
+        self.__vertex_dict[vertex_id] = Vertex(vertex_id)
         
 
     def get_vertex(self, vertex_id):
@@ -85,7 +85,9 @@ class Graph:
         vertex_id1 (string): The unique identifier of the first vertex.
         vertex_id2 (string): The unique identifier of the second vertex.
         """
-        pass
+        self.__vertex_dict[vertex_id1].add_neighbor(self.__vertex_dict[vertex_id2])
+        if not self.__is_directed:
+            self.__vertex_dict[vertex_id2].add_neighbor(self.__vertex_dict[vertex_id1])
         
     def get_vertices(self):
         """
@@ -195,4 +197,13 @@ class Graph:
         Returns:
         list<string>: All vertex ids that are `target_distance` away from the start vertex
         """
-        pass
+        if not self.contains_id(start_id):
+            raise KeyError("One or both vertices are not in the graph!")
+        temp = []
+        temp2 = [self.get_vertex(start_id)]
+        for _ in range(target_distance):
+            temp = temp2
+            tempp2 = []
+            for x in temp:
+                temp2.extend(x.get_neighbors)
+        return temp2
