@@ -66,7 +66,9 @@ class Graph:
         Returns:
         Vertex: The new vertex object.
         """
-        self.__vertex_dict[vertex_id] = Vertex(vertex_id)
+        new_vertex = Vertex(vertex_id)
+        self.__vertex_dict[vertex_id] = new_vertex
+        return new_vertex
         
 
     def get_vertex(self, vertex_id):
@@ -197,13 +199,24 @@ class Graph:
         Returns:
         list<string>: All vertex ids that are `target_distance` away from the start vertex
         """
-        if not self.contains_id(start_id):
-            raise KeyError("One or both vertices are not in the graph!")
-        temp = []
-        temp2 = [self.get_vertex(start_id)]
-        for _ in range(target_distance):
-            temp = temp2
-            tempp2 = []
-            for x in temp:
-                temp2.extend(x.get_neighbors)
-        return temp2
+        seen = set()
+        dist = { start_id: 0 }
+        queue = deque()
+        queue.append(start_id)
+        current_dist = 0
+        output = []
+        while queue and current_dist < target_distance:
+            current_id = queue.pop()
+            seen.add(current_id)
+            current_dist = dist[current_id]
+            current = self.get_vertex(current_id)
+            for vertex in current.get_neighbors():
+                vertex_id = vertex.get_id()
+                if vertex_id not in seen:
+                    queue.append(vertex_id)
+                
+                if vertex_id not in dist:
+                    dist[vertex_id] = current_dist + 1
+                    if current_dist + 1 == target_distance:
+                        output.append(vertex_id)
+        return output
