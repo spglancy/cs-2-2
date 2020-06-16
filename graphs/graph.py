@@ -222,3 +222,95 @@ class Graph:
                     if current_dist + 1 == target_distance:
                         output.append(vertex_id)
         return output
+
+    def is_bipartite(self):
+        """
+        Return True if the graph is bipartite, and False otherwise.
+        """
+        start_id = list(self.__vertex_dict.keys())[0]
+        queue = [start_id]
+        color_dict = {start_id: 0}
+        seen = set()
+        seen.add(start_id)
+        color = 0
+        while len(queue) > 0:
+            current_id = queue.pop(0)
+            color = color_dict[current_id]
+            seen.add(current_id)
+            current_node = self.get_vertex(current_id)
+            for neighbor in current_node.get_neighbors():
+                neighbor_id = neighbor.get_id()
+                if neighbor_id in color_dict:
+                    if color_dict[neighbor_id] == color:
+                        return False
+                else:
+                    color_dict[neighbor_id] = (color + 1) % 2
+                    queue.append(neighbor_id)
+        return True
+
+    def get_connected_components(self):
+        """
+        Return a list of all connected components, with each connected component
+        represented as a list of vertex ids.
+        """
+        vertices = set(self.__vertex_dict.keys())
+
+        components = []
+
+        while len(vertices) > 0:
+            start_id = list(vertices).pop()
+            vertices.remove(start_id)
+            start_vertex = self.get_vertex(start_id)
+            seen = set()
+            queue = deque()
+            queue.append(start_id)
+            seen.add(start_id)
+            while len(quene) > 0:
+                current_id = queue.pop()
+                current_vertex = self.get_vertex(current_id)
+                for neighbor in current_vertex.get_neighbors():
+                    neighbor_id = neighbor.get_id()
+                    if neighbor_id in vertices:
+                        vertices.remove(neighbor_id)
+                    if neighbor_id not in seen:
+                        queue.append(neighbor_id)
+                        seen.add(neighbor_id)
+            components.append(list(seen))
+        return(components)
+    
+    def topological_sort(self):
+        """
+        Return a valid ordering of vertices in a directed acyclic graph.
+        If the graph contains a cycle, throw a ValueError.
+        """
+        verticess = self.get_vertices()
+        indegree_dict = {}
+        for vertex in vertices:
+            if vertex.get_id() not in indegree_dict:
+                indegree_dict[vertex.get_id()] = 0
+            for neighbor in vertex.get_neighbors():
+                neighbor_id = neighbor.get_id()
+                if neighbor_id in indegree_dict:
+                    indegree_dict[neighbor_id] += 1
+                else:
+                    indegree_dict[neighbor_id] = 1
+        
+        indeg0 = []
+        for vertex_id, indegree in indegree_dict.items():
+            if indegree == 0:
+                indeg0.append(vertex_id)
+        
+        sorted_list = []
+
+        while len(indeg0) > 0:
+            current_id = indeg0.pop()
+            sorted_list.append(current_id)
+            current_vertex = self.get_vertex(current_id)
+            for neighbor in current_vertex.get_neighbors():
+                neighbor_id = neighbor.get_id()
+                indegree_dict[neighbor_id] -= 1
+                if indegree_dict[neighbor_id] == 0:
+                    indeg0.append(neighbor_id)
+        return sorted_list
+
+
