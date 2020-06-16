@@ -265,7 +265,7 @@ class Graph:
             queue = deque()
             queue.append(start_id)
             seen.add(start_id)
-            while len(quene) > 0:
+            while len(queue) > 0:
                 current_id = queue.pop()
                 current_vertex = self.get_vertex(current_id)
                 for neighbor in current_vertex.get_neighbors():
