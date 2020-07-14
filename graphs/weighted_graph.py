@@ -57,7 +57,9 @@ class WeightedGraph(Graph):
         Returns:
         Vertex: The new vertex object.
         """
-        return self.vertex_dict[vertex_id] = new WeightedVertex(vertex_id)
+        vertex = new WeightedVertex(vertex_id)
+        self.vertex_dict[vertex_id] = vertex
+        return vertex
 
     def add_edge(self, vertex_id1, vertex_id2, weight):
         """
