@@ -1,6 +1,6 @@
 from graphs.graph import Graph, Vertex
 
-class WeightedVertex(object):
+class WeightedVertex(Vertex):
     def __init__(self, vertex_id):
         """
         Initialize a vertex and its neighbors.
@@ -10,9 +10,6 @@ class WeightedVertex(object):
         """
         self.__id = vertex_id
         self.__neighbors_dict = {} # id -> (obj, weight)
-
-    def get_id(self):
-        return self.__id
 
     def add_neighbor(self, vertex_obj, weight):
         """
@@ -100,8 +97,8 @@ class WeightedGraph(Graph):
         edges = []
         for vertex in self.get_vertices():
             for neighbor, weight in vertex.get_neighbors_with_weights():
-                if ((neighbor, vertex.get_id(), weight) not in edges):
-                    edges.append((vertex.get_id(), neighbor, weight))
+                if ((neighbor, vertex.__id, weight) not in edges):
+                    edges.append((vertex.__id, neighbor, weight))
         edges.sort(reverse=True, key=sortFunc2)
         edges.sort(reverse=True, key=sortFunc)
         
@@ -109,7 +106,7 @@ class WeightedGraph(Graph):
 
         # TODO: Create a dictionary `parent_map` to map vertex -> its "parent". 
         # Initialize it so that each vertex is its own parent.
-        parent_map = {vertex.get_id(): vertex.get_id() for vertex in self.get_vertices()}
+        parent_map = {vertex.__id: vertex.__id for vertex in self.get_vertices()}
         
         # TODO: Create an empty list to hold the solution (i.e. all edges in the 
         # final spanning tree)
@@ -137,7 +134,7 @@ class WeightedGraph(Graph):
         """
         # TODO: Create a dictionary `vertex_to_weight` and initialize all
         # vertices to INFINITY - hint: use `float('inf')`
-        vertex_to_weight = {vertex.get_id(): float("inf") for vertex in self.get_vertices()}
+        vertex_to_weight = {vertex.__id: float("inf") for vertex in self.get_vertices()}
         # TODO: Choose one vertex and set its weight to 0
         start_vertex = list(vertex_to_weight.keys())[0]
         vertex_to_weight[start_vertex] = 0
@@ -148,7 +145,7 @@ class WeightedGraph(Graph):
         #    dictionary, & add its weight to the total MST weight
         # 2. Update that vertex's neighbors, if edge weights are smaller than
         #    previous weights
-        parent_map = {vertex.get_id(): vertex.get_id() for vertex in self.get_vertices()}
+        parent_map = {vertex.__id: vertex.__id for vertex in self.get_vertices()}
         solution = []
         def sortFunc(e):
             return e[2]
@@ -180,7 +177,7 @@ class WeightedGraph(Graph):
         """
         # TODO: Create a dictionary `vertex_to_distance` and initialize all
         # vertices to INFINITY - hint: use `float('inf')`
-        vertex_to_distance = {i.get_id(): float("inf") for i in self.get_vertices()}
+        vertex_to_distance = {i.__id: float("inf") for i in self.get_vertices()}
         vertex_to_distance[start_id] = 0
 
         # TODO: While `vertex_to_distance` is not empty:
