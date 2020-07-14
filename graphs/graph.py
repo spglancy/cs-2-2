@@ -331,7 +331,3 @@ class Graph:
                 if indegree_dict[neighbor_id] == 0:
                     indeg0.append(neighbor_id)
         return sorted_list
-
-
-    def timeToRot():
-        
