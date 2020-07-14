@@ -282,18 +282,18 @@ class Graph:
         """
         Return True if the directed graph contains a cycle, False otherwise.
         """
-        queue = deque()
         seen = set()
-        vertices = self.get_vertices()
-        queue.append(vertices[0])
-        seen.add(vertices[0])
-        while(len(queue)>0):
-            vertex = queue.pop()
-            if vertex in seen:
-                return True
-            for item in vertex.get_neighbors():
-                queue.append(item)
-        return False
+        current_path = []
+        def dfs_traversal_recursive(vertex):
+            for neighbor in vertex.get_neighbors():
+                if neighbor.get_id() not in seen:
+                    seen.add(neighbor.get_id())
+                    dfs_traversal_recursive(neighbor)
+            return
+
+        seen.add(start_id)
+        for vertex in self.get_vertices():
+            dfs_traversal_recursive(vertex)
         
 
     
@@ -333,3 +333,5 @@ class Graph:
         return sorted_list
 
 
+    def timeToRot():
+        
