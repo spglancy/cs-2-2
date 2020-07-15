@@ -36,7 +36,7 @@ class WeightedVertex(object):
         return output
 
 
-class WeightedGraph(Graph):
+class WeightedGraph(object):
     def __init__(self, is_directed=True):
         """
         Initialize a weighted graph object with an empty vertex dictionary.
