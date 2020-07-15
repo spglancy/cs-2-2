@@ -1,6 +1,6 @@
 from graphs.graph import Graph, Vertex
 
-class WeightedVertex(Vertex):
+class WeightedVertex(object):
     def __init__(self, vertex_id):
         """
         Initialize a vertex and its neighbors.
@@ -36,7 +36,7 @@ class WeightedVertex(Vertex):
         return output
 
 
-class WeightedGraph(object):
+class WeightedGraph(Graph):
     def __init__(self, is_directed=True):
         """
         Initialize a weighted graph object with an empty vertex dictionary.
@@ -46,6 +46,25 @@ class WeightedGraph(object):
         """
         self.vertex_dict = {} # id -> object
         self.__is_directed = is_directed
+
+    def get_vertex(self, vertex_id):
+        """Return the vertex if it exists."""
+        if vertex_id not in self.__vertex_dict:
+            return None
+
+        vertex_obj = self.__vertex_dict[vertex_id]
+        return vertex_obj
+    
+    def get_vertices(self):
+        """
+        Return all vertices in the graph.
+        
+        Returns:
+        List<Vertex>: The vertex objects contained in the graph.
+        """
+        return list(self.__vertex_dict.values())
+
+
 
     def add_vertex(self, vertex_id):
         """
