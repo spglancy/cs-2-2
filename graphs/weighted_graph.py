@@ -1,6 +1,6 @@
 from graphs.graph import Graph, Vertex
 
-class WeightedVertex(object):
+class WeightedVertex(Vertex):
     def __init__(self, vertex_id):
         """
         Initialize a vertex and its neighbors.
@@ -57,7 +57,7 @@ class WeightedGraph(Graph):
         Returns:
         Vertex: The new vertex object.
         """
-        vertex = new WeightedVertex(vertex_id)
+        vertex = WeightedVertex(vertex_id)
         self.vertex_dict[vertex_id] = vertex
         return vertex
 
