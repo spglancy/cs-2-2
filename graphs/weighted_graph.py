@@ -64,8 +64,6 @@ class WeightedGraph(Graph):
         """
         return list(self.__vertex_dict.values())
 
-
-
     def add_vertex(self, vertex_id):
         """
         Add a new vertex object to the graph with the given key and return the vertex.
